@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4cf6de20b2646f4193e999d2dee71e4, type: 3}
+  m_Name: 3-PriestCardPack
+  m_EditorClassIdentifier: 
+  _sideType: 3
+  _cost: 3
+  _cards:
+  - Id: 3301
+    Name: Shadowed Spirit
+    Texture: {fileID: 2800000, guid: 5b0b36e2ac6266e47b1ef13c70f72885, type: 3}
+    Attack: 4
+    Health: 3
+    Type: 0
