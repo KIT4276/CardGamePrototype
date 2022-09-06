@@ -1541,3 +1541,4 @@ MonoBehaviour:
   _health: {fileID: 1307249473871312366}
   _type: {fileID: 1307249472091281202}
   _description: {fileID: 1307249472827250133}
+  _thisCard: {fileID: 1307249474124220039}

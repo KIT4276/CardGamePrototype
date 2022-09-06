@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Cards
 {
@@ -19,18 +17,12 @@ namespace Cards
         [SerializeField]
         private PlayerManager _player2;
 
-        private Card[] _randomDeck1;
-        private Card[] _randomDeck2;
+        private Card[] _gameDeck1;
 
         private void Start()
         {
-            //_deck1 = CreatwDeck(_deck1Parent);
-            //_deck2 = CreatwDeck(_deck2Parent);
-            _randomDeck1 = SetDeck(_deck1, _deck1Parent);
-            _randomDeck2 = SetDeck(_deck2, _deck2Parent);
-
-            //_randomDeck1 = CreatRandomDeck(_deck1, _deck1Parent);
-            //_randomDeck2 = CreatRandomDeck(_deck2, _deck2Parent);
+            _deck1 = CreateDeck(_deck1Parent);
+            _deck2 = CreateDeck(_deck2Parent);
         }
 
         private void Update()
@@ -41,34 +33,46 @@ namespace Cards
                 {
                     if (_deck1[i] == null) continue;
 
-                    _playerHand1.SetNewCard(_deck1[i]);
+                    _playerHand1.SetNewCard(_deck1[i].GetComponent<Card>());
                     _deck1[i] = null;
                     break;
                 }
             }
         }
 
-        private Card[] SetDeck(Card[] deck, Transform parent)
+        private Card[] CreateDeck(Transform parent) // пока не придумала, как предавать выбранную колоу, в игре они - из случайных карт
         {
+            var deck = new Card[_countCardInDeck];
             var offset = 0.7f;
-            var newDeck = new Card[deck.Length];
 
-            for (int i = 0; i < deck.Length; i++)
+            for (int i = 0; i < _countCardInDeck; i++)
             {
-                newDeck[i] = Instantiate(_cardPrefab, parent); // тут null
-                newDeck[i].transform.SetParent(parent);
-                newDeck[i].transform.localPosition = new Vector3(0f, offset, 0f);
-                newDeck[i].transform.eulerAngles = new Vector3(0f, 0f, 0f);
-                //card.SwitchVisual();
+                deck[i] = Instantiate(_cardPrefab, parent);
+                deck[i].transform.localPosition = new Vector3(0f, offset, 0f);
+                deck[i].transform.eulerAngles = new Vector3(0f, 0f, 0f);
+                deck[i].SwitchVisual();
                 offset += 0.7f;
 
-                var random = deck[Random.Range(0, 29)];
-                var newMaterial = new Material(_baseMaterial);
-                newMaterial.mainTexture = random.GetComponent<CardPropertiesData>().Texture;
+                var randomCard = _allCards[Random.Range(0, _allCards.Count)];
 
-                newDeck[i].Configuration(random.GetComponent<CardPropertiesData>(), CardUtility.GetDescriptionById(random.GetComponent<CardPropertiesData>().Id), newMaterial);
+                var newMaterial = new Material(_baseMaterial);
+                newMaterial.mainTexture = randomCard.Texture;
+
+                deck[i].Configuration(randomCard, CardUtility.GetDescriptionById(randomCard.Id), newMaterial);
+
+                //if (_deck1Dictionary.TryGetValue(random, out uint value))
+                //{
+                //    Id = value;
+                //    if (_deck1DictionaryData.TryGetValue(value, out CardPropertiesData data))
+                //    {
+                //        cardData = data;
+                //    }
+                //}
+                //newMaterial.mainTexture = cardData.Texture;
+
+                //deck[i].Configuration(cardData, CardUtility.GetDescriptionById(Id), newMaterial);
             }
-            return newDeck;
+            return deck;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Cards
     {
         private void Start()
         {
-            //_sideType = Panel2.Self.GetSideType();
+            _sideType = Panel2.Self.GetSideType();
             Debug.Log("Player2 is " + _sideType);
         }
     }

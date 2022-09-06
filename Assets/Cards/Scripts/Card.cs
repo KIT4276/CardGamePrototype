@@ -29,14 +29,6 @@ namespace Cards
         private TextMeshPro _description;
 
         private float _yPosition;
-        
-
-
-        //private Camera _camera;
-        //[SerializeField]
-        //private InputAction _input;
-        //private Transform _selected;
-        //private Vector3 _offset;
 
         public bool IsEnable
         {
@@ -49,30 +41,6 @@ namespace Cards
         }
 
         public CardStateType State { get; set; } = CardStateType.InDeck;
-
-        //private void Start()
-        //{
-        //    _camera = Camera.main;
-        //    _input.Enable();
-        //    _input.performed +=  _ => OnClick(true);
-        //    _input.canceled += _=> OnClick(false);
-        //}
-
-
-        //private void Update()
-        //{
-        //    if (_selected == null) return;
-
-        //    Vector3 position = (Vector3)Mouse.current.position.ReadValue() + _offset;
-        //    position = _camera.ScreenToWorldPoint(position);
-
-        //    _selected.position = position ;
-        //}
-
-        private void Start()
-        {
-            
-        }
 
         public void Configuration(CardPropertiesData data, string description, Material image)
         {
@@ -123,7 +91,6 @@ namespace Cards
                 default:
                     if (CardManager.Self.GetIsPlayer1Turn())
                     {
-                        //Debug.Log("добавить карту в колоду 1 " + eventData);
                         //добавить карту в колоду 1
                         CardManager.Self.PlaceCardInDeck1(this, CardManager.Self.GetCardNumber1());
                     }
@@ -133,7 +100,6 @@ namespace Cards
                         //добавить карту в колоду 2
                         CardManager.Self.PlaceCardInDeck2(this, CardManager.Self.GetCardNumber2());
                     }
-
                     break;
             }
         }
@@ -175,19 +141,9 @@ namespace Cards
 
         private void DefinitionObjectUder()
         {
-            //Debug.Log("DefinitionObjectUder ");
-
             Vector3 origin = new Vector3(transform.position.x, transform.position.y + 10, transform.position.z);
             Vector3 direction = new Vector3(transform.position.x, transform.position.y - 20, transform.position.z);
             Physics.Raycast(origin, direction, out var hit, 1000f);
-
-             //hit.transform.TryGetComponent<TableCard>(out TableCard comp);//не находит карту под собой
-            //if (comp == null) return;
-
-            //else if (hit.transform.TryGetComponent<TableCard>(out TableCard component))
-            //{
-            //    Debug.Log("hit is TableCard " + component);
-            //}
         }
 
         [ContextMenu("Switch Visual")]
