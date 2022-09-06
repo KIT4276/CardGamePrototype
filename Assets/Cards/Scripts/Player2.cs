@@ -6,7 +6,7 @@ namespace Cards
 {
     public class Player2 : PlayerManager
     {
-        private void Start()
+        private void Awake()
         {
             _sideType = Panel2.Self.GetSideType();
             Debug.Log("Player2 is " + _sideType);

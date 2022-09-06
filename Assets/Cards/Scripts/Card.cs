@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace Cards
 {
-    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IDragHandler
+    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField]
         private GameObject _frontCard;
@@ -29,6 +29,8 @@ namespace Cards
         private TextMeshPro _description;
 
         private float _yPosition;
+        private Transform _landingPoint;
+        
 
         public bool IsEnable
         {
@@ -41,6 +43,8 @@ namespace Cards
         }
 
         public CardStateType State { get; set; } = CardStateType.InDeck;
+
+        
 
         public void Configuration(CardPropertiesData data, string description, Material image)
         {
@@ -61,21 +65,35 @@ namespace Cards
                     var hitPos = eventData.pointerCurrentRaycast.worldPosition;
                     var pos = transform.position;
                     transform.position = new Vector3(hitPos.x, _yPosition, hitPos.z);
-
-                    DefinitionObjectUder();
                     break;
                 case CardStateType.OnTable:
+                    var hitPosT = eventData.pointerCurrentRaycast.worldPosition;
+                    var posT = transform.position;
+                    transform.position = new Vector3(hitPosT.x, _yPosition, hitPosT.z);
                     break;
-                
             }
-            
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            switch (State)
+            {
+                case CardStateType.InHand:
+                    transform.position = _landingPoint.position;
+                    transform.parent = _landingPoint;
+                    State = CardStateType.OnTable;
+                    break;
+                case CardStateType.OnTable:
+                    transform.position = _landingPoint.position;
+                    transform.parent = _landingPoint;
+                    State = CardStateType.OnTable;
+                    break;
+            }
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            //Debug.Log("OnPointerClick " + eventData);
-
-            //DefinitionObjectUder();
+            
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -83,6 +101,7 @@ namespace Cards
             switch (State)
             {
                 case CardStateType.InHand:
+                    
                     break;
                 case CardStateType.OnTable:
                     break;
@@ -112,6 +131,7 @@ namespace Cards
                 case CardStateType.InHand:
                     transform.localScale *= 1.5f;
                     transform.position += new Vector3(0f, 2f, 0f);
+                    
                     break;
                 case CardStateType.OnTable:
                     break;
@@ -127,6 +147,7 @@ namespace Cards
             switch (State)
             {
                case CardStateType.InHand:
+                    
                     transform.localScale /= 1.5f;
                     transform.position -= new Vector3(0f, 2f, 0f);
                     break;
@@ -139,11 +160,33 @@ namespace Cards
             }
         }
 
-        private void DefinitionObjectUder()
+        //private void DefinitionObjectUder()
+        //{
+        //    Vector3 origin = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        //    Vector3 direction = new Vector3(transform.position.x, transform.position.y - 100, transform.position.z);
+        //    Physics.Raycast(origin, direction, out var hit, 1000f);
+            
+        //    Debug.Log(hit.rigidbody);
+        //    if (hit.rigidbody.GetComponent<TableCard>() != null) return;
+        //    else transform.position = hit.transform.position;
+        //}
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.TryGetComponent<TableCard>(out TableCard component))
+            {
+                _landingPoint = other.transform;
+            }
+        }
+
+        private void OnDrawGizmos()
         {
             Vector3 origin = new Vector3(transform.position.x, transform.position.y + 10, transform.position.z);
-            Vector3 direction = new Vector3(transform.position.x, transform.position.y - 20, transform.position.z);
+            Vector3 direction = new Vector3(transform.position.x, transform.position.y - 100, transform.position.z);
             Physics.Raycast(origin, direction, out var hit, 1000f);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(origin, direction);
         }
 
         [ContextMenu("Switch Visual")]
@@ -151,5 +194,7 @@ namespace Cards
         {
             IsEnable = !IsEnable;
         }
+
+        
     }
 }

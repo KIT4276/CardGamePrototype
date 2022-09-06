@@ -10,9 +10,15 @@ namespace Cards
 
         [SerializeField]
         protected TextMeshPro _halthIndicator;
-        
+        [SerializeField]
+        protected TextMeshPro _sideTypeText;
+
         protected SideType _sideType;
 
+        protected void Start()
+        {
+            _sideTypeText.text = _sideType.ToString();
+        }
 
         public void SetHalth(int value)
         {

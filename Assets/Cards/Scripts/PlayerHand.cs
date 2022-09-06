@@ -94,9 +94,7 @@ namespace Cards
                 time += Time.deltaTime;
                 yield return null;
             }
-
             card.transform.parent = parent;
-
             card.State = CardStateType.InHand;
         }
 
