@@ -29,7 +29,7 @@ namespace Cards
         private TextMeshPro _description;
 
         private Transform _landingPoint;
-        
+        private Transform _startPoint;
 
         public bool IsEnable
         {
@@ -42,7 +42,8 @@ namespace Cards
         }
 
         public CardStateType State { get; set; } = CardStateType.InDeck;
-        
+
+        private void Start() => _startPoint = transform;
 
         public void Configuration(CardPropertiesData data, string description, Material image)
         {
@@ -61,17 +62,15 @@ namespace Cards
             {
                 case CardStateType.InHand:
                     var hitPos = eventData.pointerCurrentRaycast.worldPosition;
-                    var pos = transform.position;
+                    _startPoint.position = transform.position;
                     transform.position = new Vector3(hitPos.x, transform.position.y, hitPos.z);
                     break;
                 case CardStateType.OnTable:
                     var hitPosT = eventData.pointerCurrentRaycast.worldPosition;
-                    var posT = transform.position;
+                    _startPoint.position = transform.position;
                     transform.position = new Vector3(hitPosT.x, transform.position.y, hitPosT.z);
                     break;
             }
-
-            
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -149,20 +148,15 @@ namespace Cards
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.TryGetComponent<TableCard>(out TableCard component))
+            if (other.gameObject.TryGetComponent<TableCard1>(out TableCard1 comp1) && GameManager.Self.IsPlayer1Turn)
             {
                 _landingPoint = other.transform;
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Vector3 origin = new Vector3(transform.position.x, transform.position.y + 10, transform.position.z);
-            Vector3 direction = new Vector3(transform.position.x, transform.position.y - 100, transform.position.z);
-            Physics.Raycast(origin, direction, out var hit, 1000f);
-
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(origin, direction);
+            if (other.gameObject.TryGetComponent<TableCard2>(out TableCard2 comp2) && !GameManager.Self.IsPlayer1Turn)
+            {
+                _landingPoint = other.transform;
+            }
+            else ;
         }
 
         [ContextMenu("Switch Visual")]
@@ -170,7 +164,5 @@ namespace Cards
         {
             IsEnable = !IsEnable;
         }
-
-        
     }
 }

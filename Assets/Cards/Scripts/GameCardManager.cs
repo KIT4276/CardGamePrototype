@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Cards
 {
@@ -29,14 +30,27 @@ namespace Cards
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                for (int i = _deck1.Length - 1; i >= 0; i--)
-                {
-                    if (_deck1[i] == null) continue;
+                if (_isPlayer1Turn) SetNewCardInHand(_deck1);
+                else SetNewCardInHand(_deck2);
+            }
 
-                    _playerHand1.SetNewCard(_deck1[i].GetComponent<Card>());
-                    _deck1[i] = null;
-                    break;
-                }
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                GameManager.Self.CangePlayersTurn();
+            }
+        }
+
+        private void SetNewCardInHand(Card[] deck)
+        {
+            for (int i = deck.Length - 1; i >= 0; i--)
+            {
+                if (deck[i] == null) continue;
+
+           
+                if(_isPlayer1Turn)_playerHand1.SetNewCard(deck[i].GetComponent<Card>());
+                else _playerHand2.SetNewCard(deck[i].GetComponent<Card>());
+                deck[i] = null;
+                break;
             }
         }
 
@@ -49,7 +63,7 @@ namespace Cards
             {
                 deck[i] = Instantiate(_cardPrefab, parent);
                 deck[i].transform.localPosition = new Vector3(0f, offset, 0f);
-                deck[i].transform.eulerAngles = new Vector3(0f, 0f, 0f);
+                deck[i].transform.eulerAngles = parent.eulerAngles;
                 deck[i].SwitchVisual();
                 offset += 0.7f;
 

@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace Cards
 {
-    public class TableCard : MonoBehaviour
+    public class TableCard2 : MonoBehaviour
     {
-
     }
 }

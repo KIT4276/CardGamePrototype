@@ -7,25 +7,41 @@ namespace Cards
 {
     public class PlayerHand : MonoBehaviour
     {
-        protected Card[] _cards;
+        protected Card[] _cards1;
+        protected Card[] _cards2;
 
         [SerializeField]
-        protected Transform[] _positions;
+        protected Transform[] _positions1;
+        [SerializeField]
+        protected Transform[] _positions2;
 
         protected Vector3 _startPos;
         protected Vector3 _intermedPos;
         protected Vector3 _startRot;
-        protected Vector3 _endRot;
+        protected Vector3 _endRot1;
+        protected Vector3 _endRot2;
 
         protected void Awake()
         {
-            _cards = new Card[_positions.Length];
-            _endRot = new Vector3(0f, 0f, 180f);
+            
+            _endRot1 = new Vector3(0f, 0f, 180f);
+            _endRot2 = new Vector3(0f, 180f, -180f);
         }
 
         public bool SetNewCard(Card card)
         {
-            var result = GetLastPos();
+            int result;
+            var cards = new Card[_positions1.Length];
+            if (GameManager.Self.IsPlayer1Turn)
+            {
+                cards = _cards1;
+                result = GetLastPos(_cards1);
+            }
+            else
+            {
+                cards = _cards2;
+                result = GetLastPos(_cards2);
+            }
 
             if (result == -1)
             {
@@ -33,17 +49,20 @@ namespace Cards
                 return false;
             }
 
-            _cards[result] = card;
+            cards[result] = card;
 
             _startRot = card.transform.eulerAngles;
             _startPos = card.transform.position;
             _intermedPos = new Vector3(card.transform.position.x, card.transform.position.y + 100, card.transform.position.z);
-            _cards[result].State = CardStateType.InHand;
+            cards[result].State = CardStateType.InHand;
 
             StartCoroutine(MoveCardUp(card));
             StartCoroutine(RotateCard(card));
             StartCoroutine(SwitchVisualCorutine(card));
-            StartCoroutine(MoveCardInHand(card, _positions[result]));
+
+            if (GameManager.Self.IsPlayer1Turn)
+            StartCoroutine(MoveCardInHand(card, _positions1[result]));
+            else StartCoroutine(MoveCardInHand(card, _positions2[result]));
 
             return true;
         }
@@ -68,7 +87,8 @@ namespace Cards
 
             while (time < 1f)
             {
-                card.transform.eulerAngles = Vector3.Lerp(_startRot, _endRot, time);
+                if(GameManager.Self.IsPlayer1Turn) card.transform.eulerAngles = Vector3.Lerp(_startRot, _endRot1, time);
+                else card.transform.eulerAngles = Vector3.Lerp(_startRot, _endRot2, time);
                 time += Time.deltaTime;
                 yield return null;
             }
@@ -99,11 +119,11 @@ namespace Cards
             card.State = CardStateType.InHand;
         }
 
-        private int GetLastPos()
+        private int GetLastPos(Card[] cards)
         {
-            for(int i = 0; i < _cards.Length; i++)
+            for(int i = 0; i < cards.Length; i++)
             {
-                if (_cards[i] == null) return i;
+                if (cards[i] == null) return i;
             }
 
             return -1;
