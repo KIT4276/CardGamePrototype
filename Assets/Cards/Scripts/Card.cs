@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace Cards
 {
-    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IDragHandler, IEndDragHandler
+    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField]
         private GameObject _frontCard;
@@ -28,7 +28,6 @@ namespace Cards
         [SerializeField]
         private TextMeshPro _description;
 
-        private float _yPosition;
         private Transform _landingPoint;
         
 
@@ -43,7 +42,6 @@ namespace Cards
         }
 
         public CardStateType State { get; set; } = CardStateType.InDeck;
-
         
 
         public void Configuration(CardPropertiesData data, string description, Material image)
@@ -64,14 +62,16 @@ namespace Cards
                 case CardStateType.InHand:
                     var hitPos = eventData.pointerCurrentRaycast.worldPosition;
                     var pos = transform.position;
-                    transform.position = new Vector3(hitPos.x, _yPosition, hitPos.z);
+                    transform.position = new Vector3(hitPos.x, transform.position.y, hitPos.z);
                     break;
                 case CardStateType.OnTable:
                     var hitPosT = eventData.pointerCurrentRaycast.worldPosition;
                     var posT = transform.position;
-                    transform.position = new Vector3(hitPosT.x, _yPosition, hitPosT.z);
+                    transform.position = new Vector3(hitPosT.x, transform.position.y, hitPosT.z);
                     break;
             }
+
+            
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -79,7 +79,7 @@ namespace Cards
             switch (State)
             {
                 case CardStateType.InHand:
-                    transform.position = _landingPoint.position;
+                    transform.position = new Vector3(_landingPoint.position.x, _landingPoint.position.y + 2, _landingPoint.position.z);
                     transform.parent = _landingPoint;
                     State = CardStateType.OnTable;
                     break;
@@ -87,80 +87,56 @@ namespace Cards
                     transform.position = _landingPoint.position;
                     transform.parent = _landingPoint;
                     State = CardStateType.OnTable;
-                    break;
-            }
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            switch (State)
-            {
-                case CardStateType.InHand:
-                    
-                    break;
-                case CardStateType.OnTable:
-                    break;
-                case CardStateType.Discard:
-                    break;
-                default:
-                    if (CardManager.Self.GetIsPlayer1Turn())
-                    {
-                        //добавить карту в колоду 1
-                        CardManager.Self.PlaceCardInDeck1(this, CardManager.Self.GetCardNumber1());
-                    }
-                    else if (!CardManager.Self.GetIsPlayer1Turn())
-                    {
-                        StartCardManager.Self._messageText.text = "Left to choose cards";
-                        //добавить карту в колоду 2
-                        CardManager.Self.PlaceCardInDeck2(this, CardManager.Self.GetCardNumber2());
-                    }
                     break;
             }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _yPosition = transform.position.y+2;
             switch (State)
             {
+                case CardStateType.InDeck: 
+                    break;
                 case CardStateType.InHand:
                     transform.localScale *= 1.5f;
                     transform.position += new Vector3(0f, 2f, 0f);
-                    
                     break;
                 case CardStateType.OnTable:
+                    transform.localScale *= 1.5f;
+                    transform.position += new Vector3(0f, 2f, 0f);
                     break;
                 default:
-                    transform.localScale *= 2f;
+                    transform.localScale *= 1.5f;
                     transform.position += new Vector3(0f, 1f, -7f);
                     break;
             }
+
+            Debug.Log(State);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             switch (State)
             {
-               case CardStateType.InHand:
-                    
+
+                case CardStateType.InDeck: 
+                    break;
+                case CardStateType.InHand:
                     transform.localScale /= 1.5f;
                     transform.position -= new Vector3(0f, 2f, 0f);
                     break;
                case CardStateType.OnTable:
+                    transform.localScale /= 1.5f;
+                    transform.position -= new Vector3(0f, 2f, 0f);
                     break;
                 default:
-                    transform.localScale /= 2f;
+                    transform.localScale /= 1.5f;
                     transform.position -= new Vector3(0f, 1f, -7f);
                     break;
             }
         }
 
-        //private void DefinitionObjectUder()
+        //private void DefinitionObjectUder() // как-то некорректно работает
         //{
         //    Vector3 origin = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         //    Vector3 direction = new Vector3(transform.position.x, transform.position.y - 100, transform.position.z);

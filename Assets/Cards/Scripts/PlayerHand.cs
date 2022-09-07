@@ -38,6 +38,7 @@ namespace Cards
             _startRot = card.transform.eulerAngles;
             _startPos = card.transform.position;
             _intermedPos = new Vector3(card.transform.position.x, card.transform.position.y + 100, card.transform.position.z);
+            _cards[result].State = CardStateType.InHand;
 
             StartCoroutine(MoveCardUp(card));
             StartCoroutine(RotateCard(card));
@@ -84,7 +85,7 @@ namespace Cards
         private IEnumerator MoveCardInHand(Card card, Transform parent)
         {
             var time = 0f;
-            var endPos = parent.position;
+            var endPos = new Vector3(parent.position.x, parent.position.y+2, parent.position.z) ;
 
             yield return new WaitForSeconds(1.7f);
 

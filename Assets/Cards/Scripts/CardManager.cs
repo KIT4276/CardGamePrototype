@@ -30,11 +30,12 @@ namespace Cards
         [SerializeField]
         protected int _countCardInDeck = 30;
 
-        protected bool _isPlayer1Turn = true;
+        protected bool _isPlayer1Turn;
 
         protected void Awake()
         {
             Self = this;
+            _isPlayer1Turn = true;
             IEnumerable<CardPropertiesData> cards = new List<CardPropertiesData>();
 
             foreach (var pack in _packs) cards = pack.UnionProperties(cards);
@@ -51,7 +52,12 @@ namespace Cards
             //_deck1DictionaryData = new Dictionary<uint, CardPropertiesData>(_countCardInDeck);
         }
 
-        public bool GetIsPlayer1Turn() => _isPlayer1Turn;
+        private void LateUpdate()
+        {
+            _isPlayer1Turn = GameManager.Self.IsPlayer1Turn;
+            Debug.Log(_isPlayer1Turn);
+        }
+
 
         public int GetCardNumber1() => _cardNumber1;
 
@@ -69,7 +75,7 @@ namespace Cards
                 }
                 StartCardManager.Self._headerPlayer1.SetActive(false);
                 StartCardManager.Self._headerPlayer2.SetActive(true);
-                 
+
                 _isPlayer1Turn = false;
             }
             else
