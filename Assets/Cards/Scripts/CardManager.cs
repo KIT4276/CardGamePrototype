@@ -15,10 +15,6 @@ namespace Cards
         protected Card[] _deck1;
         protected Card[] _deck2;
         protected Card[] _heap;
-        //protected Dictionary<Card, uint> _heapDictionary;
-        //protected Dictionary<uint, CardPropertiesData> _heapDictionaryData;
-        //protected Dictionary<Card, uint> _deck1Dictionary;
-        //protected Dictionary<uint, CardPropertiesData> _deck1DictionaryData;
 
         protected int _cardNumber1 = 0;
         protected int _cardNumber2 = 0;
@@ -48,16 +44,9 @@ namespace Cards
             _deck1 = new Card[_countCardInDeck];
             _deck2 = new Card[_countCardInDeck];
             _heap = new Card[_allCards.Count];
-            //_deck1Dictionary = new Dictionary<Card, uint>(_countCardInDeck);
-            //_deck1DictionaryData = new Dictionary<uint, CardPropertiesData>(_countCardInDeck);
         }
 
-        private void LateUpdate()
-        {
-            _isPlayer1Turn = GameManager.Self.IsPlayer1Turn;
-            Debug.Log(_isPlayer1Turn);
-        }
-
+        private void LateUpdate() => _isPlayer1Turn = GameManager.Self.IsPlayer1Turn;
 
         public int GetCardNumber1() => _cardNumber1;
 
@@ -81,15 +70,6 @@ namespace Cards
             else
             {
                 _deck1[i] = card;
-                //if (_heapDictionary.TryGetValue(card, out uint value))
-                //{
-                //    _deck1Dictionary[_deck1[i]] = value;
-
-                //    if (_heapDictionaryData.TryGetValue(value, out CardPropertiesData data))
-                //    {
-                //        _deck1DictionaryData[value] = data;
-                //    }
-                //}
                 _cardNumber1++;
             }
         }

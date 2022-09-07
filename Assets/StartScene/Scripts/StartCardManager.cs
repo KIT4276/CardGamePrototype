@@ -36,9 +36,6 @@ namespace Cards
             Self = this;
             _deckPlayer1 = new List<Card>();
             _heap = CreateHip();
-
-            //_heapDictionaryData = new Dictionary<uint, CardPropertiesData>();
-            //_heapDictionary = CreateCardsDictionaryHipData();
         }
 
         

@@ -9,7 +9,6 @@ namespace Cards
     {
         public static GameManager Self;
         public bool IsPlayer1Turn { get; set; }
-
         
         [SerializeField]
         private Transform _cameraAxis;
@@ -43,25 +42,25 @@ namespace Cards
             _turn2PlayerEulerAngles = new Vector3(0f, 0f, 0f);
         }
 
-        public void CangePlayersTurn()
+        public void ChangePlayersTurn()
         {
             if (IsPlayer1Turn)
             {
                 foreach (var card in _player2Hand) card.SetActive(true);
                 foreach (var card in _player1Hand) card.SetActive(false);
                 IsPlayer1Turn = false;
-                StartCoroutine(CangeCameraAngle(_turn2CameraEulerAngles, _turn2PlayerEulerAngles));
+                StartCoroutine(ChangeCameraAngle(_turn2CameraEulerAngles, _turn2PlayerEulerAngles));
             }
             else
             {
                 foreach (var card in _player1Hand) card.SetActive(true);
                 foreach (var card in _player2Hand) card.SetActive(false);
                 IsPlayer1Turn = true;
-                StartCoroutine(CangeCameraAngle(_turn1CameraEulerAngles, _turn1PlayerEulerAngles));
+                StartCoroutine(ChangeCameraAngle(_turn1CameraEulerAngles, _turn1PlayerEulerAngles));
             }
         }
 
-        private IEnumerator CangeCameraAngle(Vector3 cameraEndRot, Vector3 playerEndRot)
+        private IEnumerator ChangeCameraAngle(Vector3 cameraEndRot, Vector3 playerEndRot)
         {
             var time = 0f;
 

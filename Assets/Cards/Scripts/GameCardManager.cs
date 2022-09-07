@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace Cards
 {
@@ -18,8 +17,6 @@ namespace Cards
         [SerializeField]
         private PlayerManager _player2;
 
-        private Card[] _gameDeck1;
-
         private void Start()
         {
             _deck1 = CreateDeck(_deck1Parent);
@@ -34,10 +31,7 @@ namespace Cards
                 else SetNewCardInHand(_deck2);
             }
 
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                GameManager.Self.CangePlayersTurn();
-            }
+            if (Input.GetKeyDown(KeyCode.Z)) GameManager.Self.ChangePlayersTurn();
         }
 
         private void SetNewCardInHand(Card[] deck)
@@ -45,10 +39,10 @@ namespace Cards
             for (int i = deck.Length - 1; i >= 0; i--)
             {
                 if (deck[i] == null) continue;
-
            
                 if(_isPlayer1Turn)_playerHand1.SetNewCard(deck[i].GetComponent<Card>());
                 else _playerHand2.SetNewCard(deck[i].GetComponent<Card>());
+
                 deck[i] = null;
                 break;
             }
@@ -65,6 +59,7 @@ namespace Cards
                 deck[i].transform.localPosition = new Vector3(0f, offset, 0f);
                 deck[i].transform.eulerAngles = parent.eulerAngles;
                 deck[i].SwitchVisual();
+                deck[i].State = CardStateType.InDeck;
                 offset += 0.7f;
 
                 var randomCard = _allCards[Random.Range(0, _allCards.Count)];

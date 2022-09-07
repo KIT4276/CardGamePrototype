@@ -29,7 +29,6 @@ namespace Cards
         private TextMeshPro _description;
 
         private Transform _landingPoint;
-        private Transform _startPoint;
 
         public bool IsEnable
         {
@@ -41,9 +40,7 @@ namespace Cards
             }
         }
 
-        public CardStateType State { get; set; } = CardStateType.InDeck;
-
-        private void Start() => _startPoint = transform;
+        public CardStateType State { get; set; } = CardStateType.InChoise;
 
         public void Configuration(CardPropertiesData data, string description, Material image)
         {
@@ -62,12 +59,10 @@ namespace Cards
             {
                 case CardStateType.InHand:
                     var hitPos = eventData.pointerCurrentRaycast.worldPosition;
-                    _startPoint.position = transform.position;
                     transform.position = new Vector3(hitPos.x, transform.position.y, hitPos.z);
                     break;
                 case CardStateType.OnTable:
                     var hitPosT = eventData.pointerCurrentRaycast.worldPosition;
-                    _startPoint.position = transform.position;
                     transform.position = new Vector3(hitPosT.x, transform.position.y, hitPosT.z);
                     break;
             }
@@ -104,7 +99,7 @@ namespace Cards
                     transform.localScale *= 1.5f;
                     transform.position += new Vector3(0f, 2f, 0f);
                     break;
-                default:
+                case CardStateType.InChoise:
                     transform.localScale *= 1.5f;
                     transform.position += new Vector3(0f, 1f, -7f);
                     break;
@@ -128,7 +123,7 @@ namespace Cards
                     transform.localScale /= 1.5f;
                     transform.position -= new Vector3(0f, 2f, 0f);
                     break;
-                default:
+                case CardStateType.InChoise:
                     transform.localScale /= 1.5f;
                     transform.position -= new Vector3(0f, 1f, -7f);
                     break;
@@ -156,7 +151,6 @@ namespace Cards
             {
                 _landingPoint = other.transform;
             }
-            else ;
         }
 
         [ContextMenu("Switch Visual")]

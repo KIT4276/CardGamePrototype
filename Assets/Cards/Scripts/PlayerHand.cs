@@ -105,7 +105,9 @@ namespace Cards
         private IEnumerator MoveCardInHand(Card card, Transform parent)
         {
             var time = 0f;
-            var endPos = new Vector3(parent.position.x, parent.position.y+2, parent.position.z) ;
+            var endPos = new Vector3(parent.position.x, parent.position.y+2, parent.position.z);
+            card.transform.parent = parent;
+            card.State = CardStateType.InHand;
 
             yield return new WaitForSeconds(1.7f);
 
@@ -115,8 +117,7 @@ namespace Cards
                 time += Time.deltaTime;
                 yield return null;
             }
-            card.transform.parent = parent;
-            card.State = CardStateType.InHand;
+            
         }
 
         private int GetLastPos(Card[] cards)
