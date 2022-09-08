@@ -36,6 +36,12 @@ namespace Cards
             Self = this;
             _deckPlayer1 = new List<Card>();
             _heap = CreateHip();
+
+            _deck1 = new Card[_countCardInDeck];
+            _deck1Id = new uint[_countCardInDeck];
+            _deck2 = new Card[_countCardInDeck];
+            _deck2Id = new uint[_countCardInDeck];
+            _heap = new Card[_allCards.Count];
         }
 
         
@@ -116,7 +122,7 @@ namespace Cards
                 var newMaterial = new Material(_baseMaterial);
                 newMaterial.mainTexture = randomCard.Texture;
 
-                heap[i].Configuration(randomCard, CardUtility.GetDescriptionById(randomCard.Id), newMaterial);
+                heap[i].Configuration(randomCard, CardUtility.GetDescriptionById(randomCard.Id), newMaterial, randomCard.Id);
             }
             return hip;
         }

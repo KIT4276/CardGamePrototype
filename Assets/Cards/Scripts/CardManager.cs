@@ -13,7 +13,9 @@ namespace Cards
         protected List<CardPropertiesData> _allCards;
 
         protected Card[] _deck1;
+        public uint[] _deck1Id;
         protected Card[] _deck2;
+        public uint[] _deck2Id;
         protected Card[] _heap;
 
         protected int _cardNumber1 = 0;
@@ -28,7 +30,9 @@ namespace Cards
 
         protected bool _isPlayer1Turn;
 
-        protected void Awake()
+        public bool GetIsPlayer1Turn() => _isPlayer1Turn;
+
+        private void Awake()
         {
             Self = this;
             _isPlayer1Turn = true;
@@ -41,9 +45,6 @@ namespace Cards
             _baseMaterial = new Material(Shader.Find("TextMeshPro/Sprite"));
             _baseMaterial.renderQueue = 2990;
 
-            _deck1 = new Card[_countCardInDeck];
-            _deck2 = new Card[_countCardInDeck];
-            _heap = new Card[_allCards.Count];
         }
 
         private void LateUpdate() => _isPlayer1Turn = GameManager.Self.IsPlayer1Turn;
@@ -52,14 +53,15 @@ namespace Cards
 
         public int GetCardNumber2() => _cardNumber2;
 
-        public void PlaceCardInDeck1(Card card, int i)
+        public void PlaceCardInDeck1(Card card, int i, uint id)
         {
             if (_cardNumber1 >= 29)
             {
                 if (_cardNumber1 == 29)
                 {
                     _deck1[i] = card;
-                    
+                    _deck1Id[i] = id;
+                    StartGameManager.Self.Deck1Id[i] = id;
                     StartCardManager.Self._messageText.text = "The deck is full. Second player's turn";
                 }
                 StartCardManager.Self._headerPlayer1.SetActive(false);
@@ -70,11 +72,13 @@ namespace Cards
             else
             {
                 _deck1[i] = card;
+                _deck1Id[i] = id;
+                StartGameManager.Self.Deck1Id[i] = id;
                 _cardNumber1++;
             }
         }
 
-        public void PlaceCardInDeck2(Card card, int i)
+        public void PlaceCardInDeck2(Card card, int i, uint id)
         {
             if (_cardNumber2 >= 29)
             {
@@ -82,12 +86,16 @@ namespace Cards
                 { 
                     StartCardManager.Self._messageText.text = "The deck is full. It's time to play!";
                     _deck2[i] = card;
+                    _deck2Id[i] = id;
+                    StartGameManager.Self.Deck2Id[i] = id;
                 }
                 StartCardManager.Self._playButton.gameObject.SetActive(true);
             }
             else
             {
                 _deck2[i] = card;
+                _deck2Id[i] = id;
+                StartGameManager.Self.Deck2Id[i] = id;
                 _cardNumber2++;
             }
         }

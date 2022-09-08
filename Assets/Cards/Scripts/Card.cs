@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace Cards
 {
-    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IEndDragHandler
+    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
         [SerializeField]
         private GameObject _frontCard;
@@ -27,6 +27,7 @@ namespace Cards
         private TextMeshPro _type;
         [SerializeField]
         private TextMeshPro _description;
+        private uint _id;
 
         private Transform _landingPoint;
 
@@ -42,7 +43,7 @@ namespace Cards
 
         public CardStateType State { get; set; } = CardStateType.InChoise;
 
-        public void Configuration(CardPropertiesData data, string description, Material image)
+        public void Configuration(CardPropertiesData data, string description, Material image, uint id)
         {
             _icon.sharedMaterial = image;
             _cost.text = data.Cost.ToString();
@@ -51,6 +52,7 @@ namespace Cards
             _type.text = data.Type == CardUnitType.None ? string.Empty : data.Type.ToString();
             _attack.text = data.Attack.ToString();
             _health.text = data.Health.ToString();
+            _id = data.Id;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -157,6 +159,24 @@ namespace Cards
         public void SwitchVisual()
         {
             IsEnable = !IsEnable;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            switch (State)
+            {
+                case CardStateType.OnTable:
+                    break;
+                case CardStateType.Discard:
+                    break;
+                case CardStateType.InChoise:
+                    var id = _id;
+                    if (CardManager.Self.GetIsPlayer1Turn()) CardManager.Self.PlaceCardInDeck1(this,CardManager.Self.GetCardNumber1(), id);
+                    else CardManager.Self.PlaceCardInDeck2(this, CardManager.Self.GetCardNumber2(), id);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

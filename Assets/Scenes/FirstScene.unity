@@ -340,7 +340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &32073796
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &92108170
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,7 +875,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &125424491
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1050,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &141225283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,7 +1225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &188749087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,7 +1320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &198195767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,6 +1837,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2ddbd6963815b4ebc839939a43d795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deck1Id: 
+  _deck2Id: 
   _packs:
   - {fileID: 11400000, guid: 55dbf4c3fc0b44d43bc5d90dce9070bc, type: 2}
   - {fileID: 11400000, guid: aaded5edf91aec540b4c551cd027f1ff, type: 2}
@@ -4806,7 +4814,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &860811939
 GameObject:
   m_ObjectHideFlags: 0
@@ -4996,7 +5005,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &884737465
 GameObject:
   m_ObjectHideFlags: 0
@@ -5138,7 +5148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &929263501
 GameObject:
   m_ObjectHideFlags: 0
@@ -5312,7 +5323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -5325,6 +5337,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5413,6 +5426,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd0f4fddd4725e45b108ea5ef4b0cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &973024282
 GameObject:
   m_ObjectHideFlags: 0
@@ -6162,7 +6187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b335ccac4199c4bbbaae5a07e1c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positions: []
+  _positions1: []
+  _positions2: []
 --- !u!1 &1035500108
 GameObject:
   m_ObjectHideFlags: 0
@@ -10198,10 +10224,10 @@ RectTransform:
   m_Father: {fileID: 246106776}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 46.7, y: 1152.3}
-  m_SizeDelta: {x: 2441.7207, y: 539.36395}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 46.7, y: -853}
+  m_SizeDelta: {x: 2441.7207, y: 539.364}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1759423203
 MonoBehaviour:

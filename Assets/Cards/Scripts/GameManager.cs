@@ -28,12 +28,18 @@ namespace Cards
         private Vector3 _turn1PlayerEulerAngles;
         private Vector3 _turn2PlayerEulerAngles;
 
+        //public uint[] GameDeck1Id { get; set; }
+        //public uint[] GameDeck2Id { get; set; }
+
 
         private void Awake()
         {
             Self = this;
             IsPlayer1Turn = true;
+            CardManager.Self._deck1Id = StartGameManager.Self.Deck1Id;
+            CardManager.Self._deck2Id = StartGameManager.Self.Deck2Id;
         }
+
         private void Start()
         {
             _turn1CameraEulerAngles = new Vector3(0f, 0f, 0f);
