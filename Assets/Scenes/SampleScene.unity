@@ -4611,6 +4611,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1072956ea9b6024aa2b4d51d62cffd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deck1Id: 
+  _deck2Id: 
   _packs:
   - {fileID: 11400000, guid: 55dbf4c3fc0b44d43bc5d90dce9070bc, type: 2}
   - {fileID: 11400000, guid: aaded5edf91aec540b4c551cd027f1ff, type: 2}
@@ -4767,7 +4769,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8be2c36ee9d7be7488d4403b9cc607cf, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4810,6 +4812,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _halthIndicator: {fileID: 460468596}
   _sideTypeText: {fileID: 1079308424}
+  _MageMaterial: {fileID: 2100000, guid: 96f1efd130eb66d4a839e8736c354f97, type: 2}
+  _WarriorMterial: {fileID: 2100000, guid: aebf5d8a3f0e8314085d41c85e8963c2, type: 2}
+  _PriestMterial: {fileID: 2100000, guid: 8be2c36ee9d7be7488d4403b9cc607cf, type: 2}
+  _HunterMterial: {fileID: 2100000, guid: 3b7898aca5a2c294d9f9d25d5171c4a8, type: 2}
 --- !u!1 &1747105417
 GameObject:
   m_ObjectHideFlags: 0
@@ -5267,7 +5273,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 96f1efd130eb66d4a839e8736c354f97, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5310,6 +5316,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _halthIndicator: {fileID: 444316466}
   _sideTypeText: {fileID: 956854756}
+  _MageMaterial: {fileID: 2100000, guid: 96f1efd130eb66d4a839e8736c354f97, type: 2}
+  _WarriorMterial: {fileID: 2100000, guid: aebf5d8a3f0e8314085d41c85e8963c2, type: 2}
+  _PriestMterial: {fileID: 2100000, guid: 8be2c36ee9d7be7488d4403b9cc607cf, type: 2}
+  _HunterMterial: {fileID: 2100000, guid: 3b7898aca5a2c294d9f9d25d5171c4a8, type: 2}
 --- !u!1 &1929978114
 GameObject:
   m_ObjectHideFlags: 0
