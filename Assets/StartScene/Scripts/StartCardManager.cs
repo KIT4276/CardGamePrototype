@@ -13,7 +13,6 @@ namespace Cards
         private List<Card> _deckPlayer1;
         private List<Card> _deckPlayer2;
 
-
         [Space]
         public GameObject _headerPlayer1;
         public GameObject _headerPlayer2;
@@ -22,10 +21,7 @@ namespace Cards
         [Space]
         public Button _playButton;
 
-        [Space, SerializeField]
-        private Transform _parent;
-
-        [Space, SerializeField]
+        [Space, SerializeField, Tooltip("Cards positions on the pages")]
         private Transform[] _positions;
 
         [Space]
@@ -47,62 +43,9 @@ namespace Cards
         
         private void LateUpdate()
         {
-            if (_isPlayer1Turn) _LeftChooseCardsCount1.text = (30 - _cardNumber1).ToString();
-            if (!_isPlayer1Turn) _LeftChooseCardsCount1.text = (30 - _cardNumber2).ToString();
+            if (_isPlayer1Turn) _LeftChooseCardsCount1.text = (_countCardInDeck - _cardNumber1).ToString();
+            else _LeftChooseCardsCount1.text = (_countCardInDeck - _cardNumber2).ToString();
         }
-
-        // мб к этому вернусь
-
-        //public Dictionary<Card, uint> CreateCardsDictionaryHip()
-        //{
-        //    var HipDictionary = new Dictionary<Card, uint>();
-
-        //    for (int i = 0, j = 0; i < _allCards.Count; i++, j++)
-        //    {
-        //        _heap[i] = Instantiate(_cardPrefab, _positions[j]);
-        //        _heap[i].transform.position = _positions[j].position;
-        //        _heap[i].transform.eulerAngles = new Vector3(-90f, 180f, 0f);
-        //        _heap[i].transform.localScale = new Vector3(630f, 9f, 900f);
-
-        //        var randomCard = _allCards[Random.Range(0, _allCards.Count)];
-
-        //        var newMaterial = new Material(_baseMaterial);
-        //        newMaterial.mainTexture = randomCard.Texture;
-
-        //        _heap[i].Configuration(randomCard, CardUtility.GetDescriptionById(randomCard.Id), newMaterial);
-
-        //        HipDictionary[_heap[i]] = randomCard.Id;
-        //    }
-        //    return HipDictionary;
-        //}
-
-        //public Dictionary<Card, uint> CreateCardsDictionaryHipData()
-        //{
-        //    var heap = new Card[_allCards.Count];
-        //    var HipDictionary = new Dictionary<Card, uint>();
-
-        //    for (int i = 0, j = 0; i < _allCards.Count; i++, j++)
-        //    {
-
-        //        heap[i] = Instantiate(_cardPrefab, _positions[j]);
-        //        heap[i].transform.position = _positions[j].position;
-        //        heap[i].transform.eulerAngles = new Vector3(-90f, 180f, 0f);
-        //        heap[i].transform.localScale = new Vector3(630f, 9f, 900f);
-
-        //        var randomCard = _allCards[Random.Range(0, _allCards.Count)];
-
-        //        var newMaterial = new Material(_baseMaterial);
-        //        newMaterial.mainTexture = randomCard.Texture;
-
-        //        heap[i].Configuration(randomCard, CardUtility.GetDescriptionById(randomCard.Id), newMaterial);
-
-        //        HipDictionary[heap[i]] = randomCard.Id;
-        //        //_heapDictionaryData[HipDictionary[heap[i]]] = randomCard;
-
-        //    }
-
-        //    return HipDictionary;
-        //}
 
         private Card[] CreateHip()
         {

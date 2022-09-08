@@ -28,10 +28,6 @@ namespace Cards
         private Vector3 _turn1PlayerEulerAngles;
         private Vector3 _turn2PlayerEulerAngles;
 
-        //public uint[] GameDeck1Id { get; set; }
-        //public uint[] GameDeck2Id { get; set; }
-
-
         private void Awake()
         {
             Self = this;

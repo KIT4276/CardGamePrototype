@@ -132,35 +132,6 @@ namespace Cards
             }
         }
 
-        //private void DefinitionObjectUder() // как-то некорректно работает
-        //{
-        //    Vector3 origin = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        //    Vector3 direction = new Vector3(transform.position.x, transform.position.y - 100, transform.position.z);
-        //    Physics.Raycast(origin, direction, out var hit, 1000f);
-            
-        //    Debug.Log(hit.rigidbody);
-        //    if (hit.rigidbody.GetComponent<TableCard>() != null) return;
-        //    else transform.position = hit.transform.position;
-        //}
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.TryGetComponent<TableCard1>(out TableCard1 comp1) && GameManager.Self.IsPlayer1Turn)
-            {
-                _landingPoint = other.transform;
-            }
-            if (other.gameObject.TryGetComponent<TableCard2>(out TableCard2 comp2) && !GameManager.Self.IsPlayer1Turn)
-            {
-                _landingPoint = other.transform;
-            }
-        }
-
-        [ContextMenu("Switch Visual")]
-        public void SwitchVisual()
-        {
-            IsEnable = !IsEnable;
-        }
-
         public void OnPointerClick(PointerEventData eventData)
         {
             switch (State)
@@ -171,12 +142,49 @@ namespace Cards
                     break;
                 case CardStateType.InChoise:
                     var id = _id;
-                    if (CardManager.Self.GetIsPlayer1Turn()) CardManager.Self.PlaceCardInDeck1(this,CardManager.Self.GetCardNumber1(), id);
-                    else CardManager.Self.PlaceCardInDeck2(this, CardManager.Self.GetCardNumber2(), id);
+                    if (CardManager.Self.GetIsPlayer1Turn()) CardManager.Self.PlaceCardInDeck1(CardManager.Self.GetCardNumber1(), id);
+                    else CardManager.Self.PlaceCardInDeck2(CardManager.Self.GetCardNumber2(), id);
                     break;
                 default:
                     break;
             }
+        }
+
+        //private void DefinitionObjectUder() // как-то некорректно работает
+        //{
+        //    Vector3 origin = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        //    Vector3 direction = new Vector3(transform.position.x, transform.position.y - 100, transform.position.z);
+        //    Physics.Raycast(origin, direction, out var hit, 1000f);
+
+        //    Debug.Log(hit.rigidbody);
+        //    if (hit.rigidbody.GetComponent<TableCard>() != null) return;
+        //    else transform.position = hit.transform.position;
+        //}
+
+        private void OnTriggerEnter(Collider other)
+        {
+            switch (State)
+            {
+                case CardStateType.InHand:
+                    if (other.gameObject.TryGetComponent<TableCard1>(out TableCard1 comp1) && GameManager.Self.IsPlayer1Turn)
+                    {
+                        _landingPoint = other.transform;
+                    }
+                    if (other.gameObject.TryGetComponent<TableCard2>(out TableCard2 comp2) && !GameManager.Self.IsPlayer1Turn)
+                    {
+                        _landingPoint = other.transform;
+                    }
+                    break;
+                case CardStateType.OnTable:
+                    // todo
+                    break;
+            }
+        }
+
+        [ContextMenu("Switch Visual")]
+        public void SwitchVisual()
+        {
+            IsEnable = !IsEnable;
         }
     }
 }

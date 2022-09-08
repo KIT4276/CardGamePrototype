@@ -48,42 +48,6 @@ namespace Cards
             }
         }
 
-        //private Card[] CreateDeck(Transform parent) // пока не придумала, как предавать выбранную колоу, в игре они - из случайных карт
-        //{
-        //    var deck = new Card[_countCardInDeck];
-        //    var offset = 0.7f;
-
-        //    for (int i = 0; i < _countCardInDeck; i++)
-        //    {
-        //        deck[i] = Instantiate(_cardPrefab, parent);
-        //        deck[i].transform.localPosition = new Vector3(0f, offset, 0f);
-        //        deck[i].transform.eulerAngles = parent.eulerAngles;
-        //        deck[i].SwitchVisual();
-        //        deck[i].State = CardStateType.InDeck;
-        //        offset += 0.7f;
-
-        //        var randomCard = _allCards[Random.Range(0, _allCards.Count)];
-
-        //        var newMaterial = new Material(_baseMaterial);
-        //        newMaterial.mainTexture = randomCard.Texture;
-
-        //        deck[i].Configuration(randomCard, CardUtility.GetDescriptionById(randomCard.Id), newMaterial);
-
-        //        //if (_deck1Dictionary.TryGetValue(random, out uint value))
-        //        //{
-        //        //    Id = value;
-        //        //    if (_deck1DictionaryData.TryGetValue(value, out CardPropertiesData data))
-        //        //    {
-        //        //        cardData = data;
-        //        //    }
-        //        //}
-        //        //newMaterial.mainTexture = cardData.Texture;
-
-        //        //deck[i].Configuration(cardData, CardUtility.GetDescriptionById(Id), newMaterial);
-        //    }
-        //    return deck;
-        //}
-
         private Card[] CreateDeck(Transform parent, uint[] id) 
         {
             var deck = new Card[_countCardInDeck];
@@ -103,7 +67,6 @@ namespace Cards
                 foreach (var item in _allCards)
                 {
                     if (item.Id == id[i]) randomCard = item;
-                    else Debug.Log("Карта по Id не найдена!");
                 }
 
                 var newMaterial = new Material(_baseMaterial);

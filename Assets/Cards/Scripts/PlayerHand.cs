@@ -23,7 +23,6 @@ namespace Cards
 
         protected void Awake()
         {
-            
             _endRot1 = new Vector3(0f, 0f, 180f);
             _endRot2 = new Vector3(0f, 180f, -180f);
         }
@@ -60,8 +59,7 @@ namespace Cards
             StartCoroutine(RotateCard(card));
             StartCoroutine(SwitchVisualCorutine(card));
 
-            if (GameManager.Self.IsPlayer1Turn)
-            StartCoroutine(MoveCardInHand(card, _positions1[result]));
+            if (GameManager.Self.IsPlayer1Turn) StartCoroutine(MoveCardInHand(card, _positions1[result]));
             else StartCoroutine(MoveCardInHand(card, _positions2[result]));
 
             return true;
@@ -117,7 +115,6 @@ namespace Cards
                 time += Time.deltaTime;
                 yield return null;
             }
-            
         }
 
         private int GetLastPos(Card[] cards)
