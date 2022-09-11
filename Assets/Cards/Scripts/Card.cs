@@ -201,12 +201,14 @@ namespace Cards
         {
             yield return new WaitForSeconds(3f);
             var isTauntExists = Effects.Self.DealtTaunt();
+            int halth = _data.Health; //костыль. а Health точно нужен в виде ushort?
 
             if (isTauntExists && Taunt || !isTauntExists)
             {
-                _data.Health -= GameManager.Self._selectedCard._data.Attack;
-                if (_data.Health < 100) _health.text = _data.Health.ToString(); // костыль
-                else _health.text = "0";
+                halth -= GameManager.Self._selectedCard._data.Attack;
+                _health.text = halth.ToString();
+                if (halth <= 0) _data.Health = 0; // костыль
+                else _data.Health -= GameManager.Self._selectedCard._data.Attack;//ещё один костыль
             }
             else Debug.Log("-----------------Бить можно только по таунту!");
 
