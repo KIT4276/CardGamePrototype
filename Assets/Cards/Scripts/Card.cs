@@ -29,7 +29,14 @@ namespace Cards
         private TextMeshPro _description;
         private uint _id;
 
+        private CardPropertiesData _data;
+
         private Transform _landingPoint;
+
+        public bool IsCardSelected { get; set; }
+        public bool IsCardAttacked { get; set; }
+
+        public TextMeshPro Description { get => _description; }
 
         public bool IsEnable
         {
@@ -42,6 +49,10 @@ namespace Cards
         }
 
         public CardStateType State { get; set; } = CardStateType.InChoise;
+        public bool Taunt { get; set; }
+        public bool Rush { get; set; }
+
+        private void Update() => CheckHealth();
 
         public void Configuration(CardPropertiesData data, string description, Material image, uint id)
         {
@@ -52,6 +63,9 @@ namespace Cards
             _type.text = data.Type == CardUnitType.None ? string.Empty : data.Type.ToString();
             _attack.text = data.Attack.ToString();
             _health.text = data.Health.ToString();
+            _data = data;
+            Taunt = description.Contains("Taunt");
+            Rush = description.Contains("Rush");
             _id = data.Id;
         }
 
@@ -98,8 +112,6 @@ namespace Cards
                     transform.position += new Vector3(0f, 2f, 0f);
                     break;
                 case CardStateType.OnTable:
-                    transform.localScale *= 1.5f;
-                    transform.position += new Vector3(0f, 2f, 0f);
                     break;
                 case CardStateType.InChoise:
                     transform.localScale *= 1.5f;
@@ -122,8 +134,6 @@ namespace Cards
                     transform.position -= new Vector3(0f, 2f, 0f);
                     break;
                case CardStateType.OnTable:
-                    transform.localScale /= 1.5f;
-                    transform.position -= new Vector3(0f, 2f, 0f);
                     break;
                 case CardStateType.InChoise:
                     transform.localScale /= 1.5f;
@@ -137,8 +147,7 @@ namespace Cards
             switch (State)
             {
                 case CardStateType.OnTable:
-                    break;
-                case CardStateType.Discard:
+                    SelectCardOnTable();
                     break;
                 case CardStateType.InChoise:
                     var id = _id;
@@ -150,16 +159,59 @@ namespace Cards
             }
         }
 
-        //private void DefinitionObjectUder() // как-то некорректно работает
-        //{
-        //    Vector3 origin = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        //    Vector3 direction = new Vector3(transform.position.x, transform.position.y - 100, transform.position.z);
-        //    Physics.Raycast(origin, direction, out var hit, 1000f);
+        private void SelectCardOnTable()
+        {
+            if (GameManager.Self.IsPlayer1Turn && transform.parent.TryGetComponent<TableCard1>(out var t))
+            {
+                Debug.Log("Attack=" + _data.Attack);
+                transform.localScale *= 1.5f;
+                transform.position += new Vector3(0f, 2f, 0f);
+                var cards = FindObjectsOfType<Card>();
+                foreach (var card in cards) card.IsCardSelected = false;
+                IsCardSelected = true;
+                GameManager.Self._selectedCard = this;
+                Debug.Log(_name.text + " " + "Selected " + IsCardSelected);
+            }
+            else if(!GameManager.Self.IsPlayer1Turn && transform.parent.TryGetComponent<TableCard2>(out var r))
+            {
+                Debug.Log("Attack=" + _data.Attack);
+                transform.localScale *= 1.5f;
+                transform.position += new Vector3(0f, 2f, 0f);
+                var cards = FindObjectsOfType<Card>();
+                foreach (var card in cards) card.IsCardSelected = false;
+                IsCardSelected = true;
+                GameManager.Self._selectedCard = this;
+                Debug.Log(_name.text + " " + "Selected " + IsCardSelected);
+            }
+            else
+            {
+                var cards = FindObjectsOfType<Card>();
+                foreach (var card in cards) card.IsCardAttacked = false;
 
-        //    Debug.Log(hit.rigidbody);
-        //    if (hit.rigidbody.GetComponent<TableCard>() != null) return;
-        //    else transform.position = hit.transform.position;
-        //}
+                IsCardAttacked = true;
+
+                GameManager.Self._attackedCard = this;
+                GameManager.Self.StartJoinTheFight();
+
+                StartCoroutine(OnAttack());
+            }
+        }
+
+        private IEnumerator OnAttack()
+        {
+            yield return new WaitForSeconds(3f);
+            var isTauntExists = Effects.Self.DealtTaunt();
+
+            if (isTauntExists && Taunt || !isTauntExists)
+            {
+                _data.Health -= GameManager.Self._selectedCard._data.Attack;
+                if (_data.Health < 100) _health.text = _data.Health.ToString(); // костыль
+                else _health.text = "0";
+            }
+            else Debug.Log("-----------------Бить можно только по таунту!");
+
+            yield return null;
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -181,10 +233,22 @@ namespace Cards
             }
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.TryGetComponent<Card>(out Card card)) Debug.Log(card._health);
+        }
+
         [ContextMenu("Switch Visual")]
         public void SwitchVisual()
         {
             IsEnable = !IsEnable;
         }
+
+        private void CheckHealth()
+        {
+            if (_data.Health <= 0 || _data.Health >= 100) Destroy(gameObject); // костыль
+        }
+
+        public CardPropertiesData GetData() => _data;
     }
 }

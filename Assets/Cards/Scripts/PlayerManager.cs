@@ -31,6 +31,10 @@ namespace Cards
             SetMaterial();
         }
 
+        public void SetHalth(int value) => _halth = value;
+
+        public int GetHalth() => _halth;
+
         protected void SetMaterial() 
         {
             switch (_sideType)
@@ -50,19 +54,6 @@ namespace Cards
             }
         }
 
-        public void SetHalth(int value)
-        {
-            _halth = value;
-        }
-
-        public int GetHalth()
-        {
-            return _halth;
-        }
-
-        private void LateUpdate()
-        {
-            _halthIndicator.text = _halth.ToString();
-        }
+        private void LateUpdate() => _halthIndicator.text = _halth.ToString();
     }
 }

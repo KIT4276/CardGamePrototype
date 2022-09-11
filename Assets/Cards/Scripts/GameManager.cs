@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Cards
@@ -27,6 +28,9 @@ namespace Cards
         private Vector3 _turn2CameraEulerAngles;
         private Vector3 _turn1PlayerEulerAngles;
         private Vector3 _turn2PlayerEulerAngles;
+
+        public Card _selectedCard;
+        public Card _attackedCard;
 
         private void Awake()
         {
@@ -75,6 +79,31 @@ namespace Cards
                 {
                     card.eulerAngles = Vector3.Lerp(card.eulerAngles, cameraEndRot, time);
                 }
+                time += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        public void StartJoinTheFight() => StartCoroutine(JoinTheFight());
+        private IEnumerator JoinTheFight()
+        {
+            var time = 0f;
+            var endPos = _attackedCard.transform.position;
+            _selectedCard.transform.localScale /= 1.5f;
+            _selectedCard.transform.position -= new Vector3(0f, 2f, 0f);
+            var startPos = _selectedCard.transform.position;
+
+            while (time < 3f)
+            {
+                _selectedCard.transform.position = Vector3.Lerp(startPos, endPos, time);
+                time += Time.deltaTime;
+                yield return null;
+            }
+            time = 0;
+
+            while (time < 1.5f)
+            {
+                _selectedCard.transform.position = Vector3.Lerp(endPos, startPos, time);
                 time += Time.deltaTime;
                 yield return null;
             }

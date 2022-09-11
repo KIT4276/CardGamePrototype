@@ -24,121 +24,122 @@
 
 	<Pack Cost="1" Type="Mage">
 		<Unit Id="1001" Name="Babbling Book">
-			Add a random Mage spell to your hand.
+	#Battlecry/#: Add a random Mage spell to your hand.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="1" Type="Priest">
 		<Unit Id="1301" Name="Psychic Conjurer">
-			Copy a card in your opponent’s deck and add it to your hand.
+	#Battlecry/#: Copy a card in your opponent’s deck and add it to your hand.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="1" Type="Warrior">
 		<Unit Id="1201" Name="Bloodsail Deckhand">
-			The next weapon you play costs (1) less.
+	#Battlecry/#: The next weapon you play costs (1) less.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="2" Type="Hunter">
 		<Unit Id="2101" Name="Selective Breeder">
-			Discover a copy of a Beast in your deck.
+	#Battlecry/#: Discover a copy of a Beast in your deck.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="2" Type="Mage">
 		<Unit Id="2001" Name="Arcanologist">
-			Draw a Secret.
+	#Battlecry/#: Draw a Secret.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="2" Type="Priest">
 		<Unit Id="2301" Name="Kul Tiran Chaplain">
-			Give a friendly minion +2 Health.
+	#Battlecry/#: Give a friendly minion +2 Health.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="2" Type="Warrior">
 		<Unit Id="2201" Name="Armorsmith">
-			Whenever a friendly minion takes damage, gain 1 Armor.
+	Whenever a friendly minion takes damage, gain 1 Armor.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="3" Type="Hunter">
 		<Unit Id="3101" Name="Cloaked Huntress">
-			Your Secrets cost (0).
+	Your Secrets cost (0).
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="3" Type="Mage">
 		<Unit Id="3001" Name="Pyromaniac">
-			Whenever your Hero Power kills a minion, draw a card.
+	Whenever your Hero Power kills a minion, draw a card.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="3" Type="Priest">
 		<Unit Id="3301" Name="Shadowed Spirit">
-			Deal 3 damage to the enemy hero.
+	#Deathrattle/#: Deal 3 damage to the enemy hero.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="3" Type="Warrior">
 		<Unit Id="3201" Name="Frothing Berserker">
-			Whenever a minion takes damage, gain +1 Attack.
+	Whenever a minion takes damage, gain +1 Attack.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="4" Type="Hunter">
 		<Unit Id="4101" Name="Houndmaster Shaw">
-			Your other minions have Rush.
+	Your other minions have Rush.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="4" Type="Warrior">
 		<Unit Id="4201" Name="Bloodhoof Brave">
-			Has +3 Attack while damaged.
+			#Taunt/#
+	Has +3 Attack while damaged.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="5" Type="Mage">
 		<Unit Id="5001" Name="Aegwynn, the Guardian">
-			The next minion you draw inherits these powers.
+	#Deathrattle/#: The next minion you draw inherits these powers.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="5" Type="Priest">
 		<Unit Id="5301" Name="Drakonid Operative">
-			Battlecry: If you're holding a Dragon, Discover a copy of a card in your opponent's deck.
+	#Battlecry/#: If you're holding a Dragon, Discover a copy of a card in your opponent's deck.
 		</Unit>
 		<Unit Id="5302" Name="Lyra the Sunshard">
-			Whenever you cast a spell, add a random Priest spell to your hand.
+	Whenever you cast a spell, add a random Priest spell to your hand.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="5" Type="Warrior">
 		<Unit Id="5201" Name="Darius Crowley">
-			Rush
-			After this attacks and kills a minion, gain +2/+2.
+	#Rush/#
+	After this attacks and kills a minion, gain +2/+2.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="8" Type="Priest">
 		<Unit Id="8301" Name="Murozond the Infinite">
-			Battlecry: Play all cards your opponent played last turn.
+	#Battlecry/#: Play all cards your opponent played last turn.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="8" Type="Warrior">
 		<Unit Id="8201" Name="Grommash Hellscream">
-			Charge
-			Has +6 Attack while damaged.
+	#Charge/#
+	Has +6 Attack while damaged.
 		</Unit>
 	</Pack>
 	
 	<Pack Cost="9" Type="Mage">
 		<Unit Id="9001" Name="Kalecgos">
-			Your first spell each turn costs (0). Battlecry: Discover
-			a spell.
+	Your first spell each turn costs (0). 
+	#Battlecry/#: Discover a spell.
 		</Unit>
 	</Pack>
 
