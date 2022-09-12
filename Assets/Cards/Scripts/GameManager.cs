@@ -24,12 +24,17 @@ namespace Cards
         [SerializeField]
         private GameObject[] _player2Hand;
 
+        [Space, SerializeField]
+        private GameObject _gameOverText;
+
         private Vector3 _turn1CameraEulerAngles;
         private Vector3 _turn2CameraEulerAngles;
         private Vector3 _turn1PlayerEulerAngles;
         private Vector3 _turn2PlayerEulerAngles;
 
+        [HideInInspector]
         public Card _selectedCard;
+        [HideInInspector]
         public Card _attackedCard;
 
         private void Awake()
@@ -47,6 +52,8 @@ namespace Cards
             _turn1PlayerEulerAngles = new Vector3(0f, 180f, 0f);
             _turn2PlayerEulerAngles = new Vector3(0f, 0f, 0f);
         }
+
+        private void Update() => CheckHealth();
 
         public void ChangePlayersTurn()
         {
@@ -106,6 +113,15 @@ namespace Cards
                 _selectedCard.transform.position = Vector3.Lerp(endPos, startPos, time);
                 time += Time.deltaTime;
                 yield return null;
+            }
+        }
+
+        private void CheckHealth() // почему-то не работает
+        {
+            if (Player1.Self.GetHalth() <= 0)
+            {
+                Debug.Log(" Конец игры ");
+                _gameOverText.SetActive(true);
             }
         }
     }

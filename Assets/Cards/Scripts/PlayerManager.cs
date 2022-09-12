@@ -9,7 +9,7 @@ namespace Cards
     public class PlayerManager : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
-        protected int _halth = 20;
+        protected int _halth = 30;
         
         [Space, SerializeField]
         protected TextMeshPro _halthIndicator;
@@ -76,5 +76,6 @@ namespace Cards
             GameManager.Self.ChangePlayersTurn();
             yield return null;
         }
+
     }
 }
