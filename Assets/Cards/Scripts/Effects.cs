@@ -9,10 +9,18 @@ namespace Cards
     {
         public static Effects Self;
 
-        private void Start()
+        private void Start() => Self = this;
+
+        private bool IsTauntExists(List<Card> tableCard)
         {
-            Self = this;
+            bool taunt = false;
+            for (int i = 0; i < tableCard.Count; i++)
+            {
+                if (tableCard[i].Taunt) taunt = true;
+            }
+            return taunt;
         }
+
         public bool DealtTaunt()
         {
             var cardsInGame = FindObjectsOfType<Card>();
@@ -35,14 +43,9 @@ namespace Cards
 
         }
 
-        private bool IsTauntExists(List<Card> tableCard)// почему некорректно работает?
+        public void DealtBattlecry()
         {
-            bool taunt = false;
-            for (int i = 0; i < tableCard.Count; i++)
-            {
-                if (tableCard[i].Taunt) taunt = true;
-            }
-            return taunt;
+
         }
     }
 }

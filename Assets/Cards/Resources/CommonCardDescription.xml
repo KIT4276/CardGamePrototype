@@ -219,7 +219,7 @@
       #Taunt/#
     </Unit>
     <Unit Id="502" Name="Darkscale Healer">
-      #Battlecry/#: Restore 2 Health to all friendly characters
+      #Battlecry/#: Restore 2 Health
     </Unit>
     <Unit Id="503" Name="Frostwolf Warlord">
       #Battlecry/#: Gain +1/+1 for each other friendly minion on the battlefield

@@ -6,10 +6,10 @@ namespace Cards
 {
     public class PlayerManager : MonoBehaviour
     {
-        protected int _halth = 20;
-
-        
         [SerializeField]
+        protected int _halth = 20;
+        
+        [Space, SerializeField]
         protected TextMeshPro _halthIndicator;
         [SerializeField]
         protected TextMeshPro _sideTypeText;
@@ -25,17 +25,18 @@ namespace Cards
 
         protected SideType _sideType;
 
+        public static PlayerManager Self;
+
         protected void Start()
         {
+            Self = this;
             _sideTypeText.text = _sideType.ToString();
             SetMaterial();
         }
 
-        public void SetHalth(int value) => _halth = value;
+        private void LateUpdate() => _halthIndicator.text = _halth.ToString();
 
-        public int GetHalth() => _halth;
-
-        protected void SetMaterial() 
+        protected void SetMaterial()
         {
             switch (_sideType)
             {
@@ -54,6 +55,8 @@ namespace Cards
             }
         }
 
-        private void LateUpdate() => _halthIndicator.text = _halth.ToString();
+        public void SetHalth(int value) => _halth = value;
+
+        public int GetHalth() => _halth;
     }
 }

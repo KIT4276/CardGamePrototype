@@ -49,59 +49,59 @@ namespace Cards
             }
         }
 
-        //private Card[] CreateDeck(Transform parent, uint[] id) // рабочий метод
-        //{
-        //    var deck = new Card[_countCardInDeck];
-        //    var offset = 0.7f;
-
-        //    for (int i = 0; i < _countCardInDeck; i++)
-        //    {
-        //        deck[i] = Instantiate(_cardPrefab, parent);
-        //        deck[i].transform.localPosition = new Vector3(0f, offset, 0f);
-        //        deck[i].transform.eulerAngles = parent.eulerAngles;
-        //        deck[i].SwitchVisual();
-        //        deck[i].State = CardStateType.InDeck;
-        //        offset += 0.7f;
-
-        //        var randomCard = _allCards[Random.Range(0, _allCards.Count)];
-
-        //        foreach (var item in _allCards)
-        //        {
-        //            if (item.Id == id[i]) randomCard = item;
-        //        }
-
-        //        var newMaterial = new Material(_baseMaterial);
-        //        newMaterial.mainTexture = randomCard.Texture;
-
-        //        deck[i].Configuration(randomCard, CardUtility.GetDescriptionById(id[i]), newMaterial, id[i]);
-        //    }
-
-        //    Shuffle<Card>(deck);
-        //    return deck;
-        //}
-
-        private Card[] CreateDeck(Transform parent, uint[] id) // для проверки игры
+        private Card[] CreateDeck(Transform parent, uint[] id) // рабочий метод
         {
+            var deck = new Card[_countCardInDeck];
             var offset = 0.7f;
-            var newDeck = new Card[30];
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < _countCardInDeck; i++)
             {
-                newDeck[i] = Instantiate(_cardPrefab, parent); 
-                newDeck[i].transform.SetParent(parent);
-                newDeck[i].transform.localPosition = new Vector3(0f, offset, 0f);
-                newDeck[i].transform.eulerAngles = new Vector3(0f, 0f, 0f);
-                newDeck[i].SwitchVisual();
+                deck[i] = Instantiate(_cardPrefab, parent);
+                deck[i].transform.localPosition = new Vector3(0f, offset, 0f);
+                deck[i].transform.eulerAngles = parent.eulerAngles;
+                deck[i].SwitchVisual();
+                deck[i].State = CardStateType.InDeck;
                 offset += 0.7f;
 
-                var random = _allCards[Random.Range(0, 29)];
-                var newMaterial = new Material(_baseMaterial);
-                newMaterial.mainTexture = random.Texture;
+                var randomCard = _allCards[Random.Range(0, _allCards.Count)];
 
-                newDeck[i].Configuration(random, CardUtility.GetDescriptionById(random.Id), newMaterial, random.Id);
+                foreach (var item in _allCards)
+                {
+                    if (item.Id == id[i]) randomCard = item;
+                }
+
+                var newMaterial = new Material(_baseMaterial);
+                newMaterial.mainTexture = randomCard.Texture;
+
+                deck[i].Configuration(randomCard, CardUtility.GetDescriptionById(id[i]), newMaterial, id[i]);
             }
-            return newDeck;
+
+            Shuffle<Card>(deck);
+            return deck;
         }
+
+        //private Card[] CreateDeck(Transform parent, uint[] id) // для проверки игры
+        //{
+        //    var offset = 0.7f;
+        //    var newDeck = new Card[30];
+
+        //    for (int i = 0; i < 30; i++)
+        //    {
+        //        newDeck[i] = Instantiate(_cardPrefab, parent); 
+        //        newDeck[i].transform.SetParent(parent);
+        //        newDeck[i].transform.localPosition = new Vector3(0f, offset, 0f);
+        //        newDeck[i].transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        //        newDeck[i].SwitchVisual();
+        //        offset += 0.7f;
+
+        //        var random = _allCards[Random.Range(0, 29)];
+        //        var newMaterial = new Material(_baseMaterial);
+        //        newMaterial.mainTexture = random.Texture;
+
+        //        newDeck[i].Configuration(random, CardUtility.GetDescriptionById(random.Id), newMaterial, random.Id);
+        //    }
+        //    return newDeck;
+        //}
 
         private void Shuffle<T>(IList<T> inputList) //Кирилл нашел вот такой миленький шафл :D но все равно как то странно "работает"...
         {

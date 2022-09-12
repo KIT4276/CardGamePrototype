@@ -38,7 +38,7 @@ namespace Cards
 		[Width(40)]
 		public ushort Attack;
 		[Width(40)]
-		public ushort Health;
+		public int Health;
 		[Width(65)]
 		public CardUnitType Type;
 
@@ -52,9 +52,9 @@ namespace Cards
 	{
 		public ushort Cost;
 		public ushort Attack;
-		public ushort Health;
+		public int Health;
 
-		public CardParamsData(ushort cost, ushort attack, ushort health)
+		public CardParamsData(ushort cost, ushort attack, int health)
 		{
 			Cost = cost; Attack = attack; Health = health;
 		}
