@@ -1,10 +1,12 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Cards
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
         protected int _halth = 20;
@@ -58,5 +60,21 @@ namespace Cards
         public void SetHalth(int value) => _halth = value;
 
         public int GetHalth() => _halth;
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            var attack = GameManager.Self._selectedCard.GetData().Attack;
+            GameManager.Self.StartJoinTheFight(this.transform);
+            StartCoroutine(DealtDamage(attack));
+        }
+
+        private IEnumerator DealtDamage(ushort attack)
+        {
+            yield return new WaitForSeconds(3f);
+            _halth -= attack;
+            yield return new WaitForSeconds(2f);
+            GameManager.Self.ChangePlayersTurn();
+            yield return null;
+        }
     }
 }

@@ -14,6 +14,30 @@ namespace Cards
 
         private void Start() => Self = this;
 
+        private void MurlocTidehunter(Card card)//    полетит ли? NO
+        {
+            if (card.GetName() == "Murloc Tidehunter") 
+            {
+                var murlocScoutProp = SummonMurlocScout();
+                Transform parent;
+
+                if (GameManager.Self.IsPlayer1Turn) parent = FindObjectOfType<TableCard1>().transform;
+                else parent = FindObjectOfType<TableCard2>().transform;
+
+                var murloc = Instantiate(_cardPrefab, parent);
+                murloc.transform.SetParent(parent);// мурлок будет в том же родителе 
+                murloc.transform.position = card.transform.position - new Vector3(0f, 0f, 100f); // тут мурлок встанет на вызвавшую его карту, но немного ниже. будет странно
+                murloc.transform.eulerAngles = card.transform.eulerAngles;
+                murloc.GetComponent<Card>().SwitchVisual();
+
+                var newMaterial = new Material(murloc.GetComponent<Card>()._icon.GetComponent<Shader>());// что-то пойдёт не так
+                newMaterial.mainTexture = murlocScoutProp.Texture;
+
+                murloc.GetComponent<Card>().Configuration(murlocScoutProp, CardUtility.GetDescriptionById(murlocScoutProp.Id), newMaterial, murlocScoutProp.Id);
+                murloc.GetComponent<Card>().State = CardStateType.OnTable;
+            }
+        }
+
         private bool IsTauntExists(List<Card> tableCard)
         {
             bool taunt = false;
@@ -47,23 +71,7 @@ namespace Cards
 
         public void CheckBattlecry(Card card)
         {
-            if (card.GetName() == "Murloc Tidehunter") //     полетит ли?         NO
-            {
-                var murlocScoutProp = SummonMurlocScout();
-                var parent = card.transform.parent;
-
-                var murloc = Instantiate(_cardPrefab, parent);
-                murloc.transform.SetParent(parent);// мурлок будет в том же родителе 
-                murloc.transform.position = card.transform.position - new Vector3(0f,0f,100f); // тут мурлок встанет на вызвавшую его карту, но немного ниже. будет странно
-                murloc.transform.eulerAngles = card.transform.eulerAngles;
-                murloc.GetComponent<Card>().SwitchVisual();
-
-                var newMaterial = new Material(murloc.GetComponent<Card>()._icon.GetComponent<Shader>());// что-то пойдёт не так
-                newMaterial.mainTexture = murlocScoutProp.Texture;
-
-                murloc.GetComponent<Card>().Configuration(murlocScoutProp, CardUtility.GetDescriptionById(murlocScoutProp.Id), newMaterial, murlocScoutProp.Id);
-                murloc.GetComponent<Card>().State = CardStateType.OnTable;
-            }
+            //MurlocTidehunter(card); // пока не будем вызывать, оно не работает
         }
 
         public CardPropertiesData SummonMurlocScout()

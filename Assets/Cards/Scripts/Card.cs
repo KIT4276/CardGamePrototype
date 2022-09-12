@@ -91,7 +91,7 @@ namespace Cards
                 IsCardAttacked = true;
 
                 GameManager.Self._attackedCard = this;
-                GameManager.Self.StartJoinTheFight();
+                GameManager.Self.StartJoinTheFight(this.transform);
 
                 StartCoroutine(OnAttack());
             }

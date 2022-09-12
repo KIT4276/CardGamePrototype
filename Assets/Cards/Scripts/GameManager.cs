@@ -84,11 +84,11 @@ namespace Cards
             }
         }
 
-        public void StartJoinTheFight() => StartCoroutine(JoinTheFight());
-        private IEnumerator JoinTheFight()
+        public void StartJoinTheFight(Transform target) => StartCoroutine(JoinTheFight(target));
+        private IEnumerator JoinTheFight(Transform target)
         {
             var time = 0f;
-            var endPos = _attackedCard.transform.position;
+            var endPos = target.position;
             _selectedCard.transform.localScale /= 1.5f;
             _selectedCard.transform.position -= new Vector3(0f, 2f, 0f);
             var startPos = _selectedCard.transform.position;
