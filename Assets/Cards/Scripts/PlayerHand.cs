@@ -44,25 +44,28 @@ namespace Cards
 
             if (result == -1)
             {
-                Destroy(card.gameObject);
+                //Destroy(card.gameObject);
+                cards = new Card[_positions1.Length];
                 return false;
             }
+            else
+            {
+                cards[result] = card;
 
-            cards[result] = card;
+                _startRot = card.transform.eulerAngles;
+                _startPos = card.transform.position;
+                _intermedPos = new Vector3(card.transform.position.x, card.transform.position.y + 100, card.transform.position.z);
+                cards[result].State = CardStateType.InHand;
 
-            _startRot = card.transform.eulerAngles;
-            _startPos = card.transform.position;
-            _intermedPos = new Vector3(card.transform.position.x, card.transform.position.y + 100, card.transform.position.z);
-            cards[result].State = CardStateType.InHand;
+                StartCoroutine(MoveCardUp(card));
+                StartCoroutine(RotateCard(card));
+                StartCoroutine(SwitchVisualCorutine(card));
 
-            StartCoroutine(MoveCardUp(card));
-            StartCoroutine(RotateCard(card));
-            StartCoroutine(SwitchVisualCorutine(card));
+                if (GameManager.Self.IsPlayer1Turn) StartCoroutine(MoveCardInHand(card, _positions1[result]));
+                else StartCoroutine(MoveCardInHand(card, _positions2[result]));
 
-            if (GameManager.Self.IsPlayer1Turn) StartCoroutine(MoveCardInHand(card, _positions1[result]));
-            else StartCoroutine(MoveCardInHand(card, _positions2[result]));
-
-            return true;
+                return true;
+            }
         }
 
         private IEnumerator MoveCardUp(Card card)
@@ -117,7 +120,7 @@ namespace Cards
             }
         }
 
-        private int GetLastPos(Card[] cards)
+        private int GetLastPos(Card[] cards)// чёт не работает, как хотелось бы
         {
             for(int i = 0; i < cards.Length; i++)
             {

@@ -51,8 +51,6 @@ namespace Cards
 
         private void LateUpdate() => _isPlayer1Turn = GameManager.Self.IsPlayer1Turn;
 
-       
-
         public void PlaceCardInDeck1(int i, uint id)
         {
             if (_cardNumber1 >= 29)
@@ -97,5 +95,7 @@ namespace Cards
         }
 
         public void StartGame() => SceneManager.LoadScene("SampleScene");
+
+        public List<CardPropertiesData> GetAllCards() => _allCards;
     }
 }

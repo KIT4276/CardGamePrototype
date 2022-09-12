@@ -14,7 +14,7 @@ namespace Cards
         private GameObject _frontCard;
 
         [Space, SerializeField]
-        private MeshRenderer _icon;
+        public MeshRenderer _icon;
         [SerializeField]
         private TextMeshPro _cost;
         [SerializeField]
@@ -177,6 +177,7 @@ namespace Cards
                     transform.position = new Vector3(_landingPoint.position.x, _landingPoint.position.y + 2, _landingPoint.position.z);
                     transform.parent = _landingPoint;
                     State = CardStateType.OnTable;
+                    
                     if (Description.text.Contains("Restore 2 Health"))
                     {
                         if(GameManager.Self.IsPlayer1Turn) Player1.Self.SetHalth(Player1.Self.GetHalth() + 2);
@@ -184,6 +185,9 @@ namespace Cards
                         Debug.Log("Restore 2 Health");
                     }
                     if (!Description.text.Contains("Charge")) GameManager.Self.ChangePlayersTurn();
+
+                    Effects.Self.CheckBattlecry(this);
+
                     break;
                 case CardStateType.OnTable:
                     transform.position = _landingPoint.position;
@@ -258,5 +262,7 @@ namespace Cards
         }
 
         public CardPropertiesData GetData() => _data;
+
+        public string GetName() => _name.text;
     }
 }
