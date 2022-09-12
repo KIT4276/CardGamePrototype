@@ -53,7 +53,6 @@ namespace Cards
             _turn2PlayerEulerAngles = new Vector3(0f, 0f, 0f);
         }
 
-        private void Update() => CheckHealth();
 
         public void ChangePlayersTurn()
         {
@@ -116,13 +115,15 @@ namespace Cards
             }
         }
 
-        private void CheckHealth() // почему-то не работает
+        public bool CheckHealth(int halth) // почему-то не работает
         {
-            if (Player1.Self.GetHalth() <= 0)
+            if (halth <= 0)
             {
                 Debug.Log(" Конец игры ");
                 _gameOverText.SetActive(true);
+                return true;
             }
+            else return false;
         }
     }
 }

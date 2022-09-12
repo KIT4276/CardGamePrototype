@@ -9,7 +9,7 @@ namespace Cards
     public class PlayerManager : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
-        protected int _halth = 30;
+        protected int _halth = 20;
         
         [Space, SerializeField]
         protected TextMeshPro _halthIndicator;
