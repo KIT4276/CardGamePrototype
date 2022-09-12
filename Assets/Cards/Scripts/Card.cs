@@ -177,7 +177,10 @@ namespace Cards
                     transform.position = new Vector3(_landingPoint.position.x, _landingPoint.position.y + 2, _landingPoint.position.z);
                     transform.parent = _landingPoint;
                     State = CardStateType.OnTable;
-                    
+
+                    if(GameManager.Self.IsPlayer1Turn) PlayerHand1.Self.RemovingCardFromArray(this);
+                    else PlayerHand2.Self.RemovingCardFromArray(this);
+
                     if (Description.text.Contains("Restore 2 Health"))
                     {
                         if(GameManager.Self.IsPlayer1Turn) Player1.Self.SetHalth(Player1.Self.GetHalth() + 2);
@@ -222,7 +225,6 @@ namespace Cards
         {
             switch (State)
             {
-
                 case CardStateType.InDeck: 
                     break;
                 case CardStateType.InHand:

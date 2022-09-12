@@ -80,7 +80,7 @@ namespace Cards
             return deck;
         }
 
-        //private Card[] CreateDeck(Transform parent, uint[] id) // для проверки игры
+        //private Card[] CreateDeck(Transform parent, uint[] id) // метод для проверки игры, чтобы не запускать первую сцену
         //{
         //    var offset = 0.7f;
         //    var newDeck = new Card[30];
@@ -103,7 +103,8 @@ namespace Cards
         //    return newDeck;
         //}
 
-        private void Shuffle<T>(IList<T> inputList) //Кирилл нашел вот такой миленький шафл :D но все равно как то странно "работает"...
+        private void Shuffle<T>(IList<T> inputList) //Кирилл нашел вот такой миленький шафл. Вроде, работает.
+                                                    //А у него - нет... Или мне только кажется, что работает...
         {
             for (int i = 0; i < inputList.Count - 1; i++)
             {

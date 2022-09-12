@@ -21,10 +21,13 @@ namespace Cards
         protected Vector3 _endRot1;
         protected Vector3 _endRot2;
 
+        public static PlayerHand Self;
+
         protected void Awake()
         {
             _endRot1 = new Vector3(0f, 0f, 180f);
             _endRot2 = new Vector3(0f, 180f, -180f);
+            Self = this;
         }
 
         public bool SetNewCard(Card card)
@@ -45,7 +48,7 @@ namespace Cards
             if (result == -1)
             {
                 //Destroy(card.gameObject);
-                cards = new Card[_positions1.Length];
+                Debug.Log("---------------Слишком много карт!--------------");
                 return false;
             }
             else
@@ -120,7 +123,7 @@ namespace Cards
             }
         }
 
-        private int GetLastPos(Card[] cards)// чёт не работает, как хотелось бы
+        private int GetLastPos(Card[] cards)
         {
             for(int i = 0; i < cards.Length; i++)
             {
